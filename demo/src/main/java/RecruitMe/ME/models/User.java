@@ -1,5 +1,6 @@
 package RecruitMe.ME.models;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -10,14 +11,14 @@ public class User {
     private String username;
     private String email;
     private String password;
-    private String role; // "recruiter" or "applicant"
-    private String profileId; // Reference to the profile model
+    private Role role; // "recruiter" or "applicant"
+    private UserProfile profile;
 
     public User() {
         // Default constructor
     }
 
-    public User(String username, String email, String password, String role) {
+    public User(String username, String email, String password, Role role) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -56,19 +57,19 @@ public class User {
         this.password = password;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
-    public String getProfileId() {
-        return profileId;
+    public UserProfile getProfileId() {
+        return profile;
     }
 
-    public void setProfileId(String profileId) {
-        this.profileId = profileId;
+    public void setProfile(UserProfile profile) {
+        this.profile = profile;
     }
 }
