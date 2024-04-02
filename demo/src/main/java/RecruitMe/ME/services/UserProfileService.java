@@ -4,23 +4,28 @@ import RecruitMe.ME.dto.CreateUserRequestDTO;
 import RecruitMe.ME.dto.UpdateProfileRequestDTO;
 import RecruitMe.ME.models.*;
 import RecruitMe.ME.repositories.UserProfileRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Date;
 import java.util.List;
 
+@Service
 public class UserProfileService {
-private final  UserProfileRepository userProfileRepository;
 
-public UserProfileService(UserProfileRepository userProfileRepository) {
-    this.userProfileRepository = userProfileRepository;
-}
+    @Autowired
+    private final  UserProfileRepository userProfileRepository;
 
-public UserProfile getUserProfile(String profileId) {
-   return userProfileRepository.findById(profileId).orElseThrow(() -> new RuntimeException("Cannot Find Profile with That Id"));
+    public UserProfileService(UserProfileRepository userProfileRepository) {
+        this.userProfileRepository = userProfileRepository;
+    }
 
-}
+    public UserProfile getUserProfile(String profileId) {
+        return userProfileRepository.findById(profileId).orElseThrow(() -> new RuntimeException("Cannot Find Profile with That Id"));
+
+    }
 public UserProfile updateProfile(String userId, UpdateProfileRequestDTO requestDTO) {
 
     UserProfile userProfile = userProfileRepository.findById(userId).orElseThrow(() -> new RuntimeException("No User Found With That Id"));
