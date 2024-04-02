@@ -1,5 +1,6 @@
 package RecruitMe.ME.controllers;
 
+import RecruitMe.ME.dto.CreateUserRequestDTO;
 import RecruitMe.ME.models.User;
 import RecruitMe.ME.services.UserService;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +15,8 @@ public class UserController {
     }
 
    @PostMapping("/users")
-    public User createUser(@RequestBody User user) {
-        return userService.registerUser(user.getUsername(), user.getEmail(),  user.getPassword(),user.getRole());
+    public User createUser(@RequestBody CreateUserRequestDTO requestDTO) {
+        return userService.registerUser(requestDTO);
     }
 
     @GetMapping("/users/{userId}")

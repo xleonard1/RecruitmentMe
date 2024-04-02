@@ -1,10 +1,14 @@
 package RecruitMe.ME.models;
 
+import org.springframework.data.annotation.Id;
+
 import java.util.Date;
 import java.util.List;
 
 
 public class UserProfile {
+    @Id
+    private String id;
     private String firstName;
     private String lastName;
     private String emailAddress;
@@ -28,7 +32,11 @@ public class UserProfile {
     private double expectedSalaryMin;
     private double expectedSalaryMax;
     private Availability availability;
+    private User user;
 
+    public UserProfile() {
+        // default user profile
+    }
     public UserProfile(
             String firstName,
             String lastName,
@@ -71,6 +79,8 @@ public class UserProfile {
        this.expectedSalaryMax = expectedSalaryMax;
        this.expectedSalaryMin = expectedSalaryMin;
     }
+
+
 
     public Address getAddress() {
         return address;
@@ -231,4 +241,13 @@ public class UserProfile {
     public void setTechnicalSkills(List<String> technicalSkills) {
         this.technicalSkills = technicalSkills;
     }
+
+    public String getId(){
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
 }

@@ -65,7 +65,7 @@ public class User {
         this.role = role;
     }
 
-    public UserProfile getProfileId() {
+    public UserProfile getProfile() {
         return profile;
     }
 
