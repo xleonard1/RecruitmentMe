@@ -29,20 +29,29 @@ public class UserService {
     }
 
      public User registerUser(CreateUserRequestDTO requestDTO) {
-         String hashedPassword = bCryptPasswordEncoder.encode(requestDTO.getPassword());
-         User user = new User(requestDTO.getUsername(), requestDTO.getEmail(),  hashedPassword, requestDTO.getRole());
+         try {
+             String hashedPassword = bCryptPasswordEncoder.encode(requestDTO.getPassword());
+             User user = new User(requestDTO.getUsername(), requestDTO.getEmail(), hashedPassword, requestDTO.getRole());
+             User savedUser = userRepository.save(user);
 
-         // Create and save UserProfile
-         UserProfile userProfile = new UserProfile();
-         userProfile.setEmailAddress(requestDTO.getEmail());
-         userProfile.setPassword(requestDTO.getPassword());
-         UserProfile savedProfile = userProfileRepository.save(userProfile);
+             String userId = savedUser.getId();
+             // Create and save UserProfile
+             UserProfile userProfile = new UserProfile();
+             userProfile.setEmailAddress(requestDTO.getEmail());
+             userProfile.setPassword(hashedPassword);
+             userProfile.setUserId(userId);
 
-         // Set UserProfile in User
-         user.setProfile(savedProfile);
+             UserProfile savedProfile = userProfileRepository.save(userProfile);
 
-         System.out.print(hashedPassword);
-         return userRepository.save(user);
+             // Set UserProfile in User
+             user.setProfile(savedProfile);
+
+             return savedUser;
+         } catch (Exception error) {
+             // Log the exception for debugging
+             System.out.print(error.toString());
+             throw new RuntimeException(error.toString());
+         }
      };
 
     public User getUserByIdWithProfile(String userId) {
@@ -51,6 +60,11 @@ public class UserService {
             UserProfile userProfile = user.getProfile();
         }
         return user;
+    }
+
+    public User updateUser(String username, String email, String password, Role role) {
+        User user = new User(username, email, password, role);
+        return userRepository.save(user);
     }
 
 

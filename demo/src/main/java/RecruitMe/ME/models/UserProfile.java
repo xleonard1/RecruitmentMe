@@ -32,7 +32,7 @@ public class UserProfile {
     private double expectedSalaryMin;
     private double expectedSalaryMax;
     private Availability availability;
-    private User user;
+    private String userId;
 
     public UserProfile() {
         // default user profile
@@ -58,6 +58,7 @@ public class UserProfile {
             double expectedSalaryMin,
             double expectedSalaryMax,
             Availability availability
+
     ) {
        this.firstName = firstName;
        this.lastName = lastName;
@@ -78,6 +79,8 @@ public class UserProfile {
        this.preferredWorkLocations = preferredWorkLocations;
        this.expectedSalaryMax = expectedSalaryMax;
        this.expectedSalaryMin = expectedSalaryMin;
+
+
     }
 
 
@@ -248,6 +251,14 @@ public class UserProfile {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
 }
