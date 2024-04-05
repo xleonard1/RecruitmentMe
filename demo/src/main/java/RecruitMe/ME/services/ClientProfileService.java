@@ -23,7 +23,7 @@ public class ClientProfileService {
 
     public ClientProfile updateClientProfile(String clientProfileId, UpdateClientProfileDTO requestDto) {
         try {
-            String hashedPassword = bCryptPasswordEncoder.encode(requestDTO.getPassword());
+            String hashedPassword = bCryptPasswordEncoder.encode(requestDto.getPassword());
             ClientProfile clientProfile = clientProfileRepository.findById(clientProfileId).orElseThrow(() ->  new RuntimeException("No Client Found with that Id"));
             clientProfile.setClientPassword(requestDto.getPassword());
             clientProfile.setClientEmail(requestDto.getEmail());
@@ -33,10 +33,10 @@ public class ClientProfileService {
             clientProfile.setNumberOfEmployees(requestDto.getNumberOfEmployees());
 
             if(clientProfile.getUserId() != null) {
-                User user = userRepository.findById((clientProfile.getUserId()))
-                    user.setEmail(requestDTO.getEmail());
+                User user = userRepository.findById((clientProfile.getUserId())).orElseThrow(() -> new RuntimeException("No User Found With That ID"));
+                    user.setEmail(requestDto.getEmail());
                     user.setPassword(hashedPassword);
-                    user.setUsername(requestDTO.getUsername());
+                    user.setUsername(requestDto.getUsername());
                     userRepository.save(user);
             }
 
