@@ -59,9 +59,6 @@ public class UserService {
                  return savedUser;
              }
 
-             // Set UserProfile in User
-             user.setProfile(savedProfile);
-
              return savedUser;
          } catch (Exception error) {
              // Log the exception for debugging
