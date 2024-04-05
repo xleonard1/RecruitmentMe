@@ -15,6 +15,7 @@ public class ClientProfile {
     private String companyDescription;
     private int numberOfEmployees;
     private List<String> companyStories;
+    private String userId;
     public ClientProfile() {
        // initial constructor
    }
@@ -73,6 +74,14 @@ public class ClientProfile {
 
    public void setCompanyStories(List<String> companyStories) {
        this.companyStories = companyStories;
+   }
+
+   public String getUserId() {
+        return userId;
+   }
+
+   public void setUserId(String userId) {
+        this.userId = userId;
    }
 
 

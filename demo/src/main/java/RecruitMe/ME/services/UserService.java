@@ -1,11 +1,14 @@
 package RecruitMe.ME.services;
 
 import RecruitMe.ME.dto.CreateUserRequestDTO;
+import RecruitMe.ME.models.ClientProfile;
 import RecruitMe.ME.models.Role;
 import RecruitMe.ME.models.User;
 import RecruitMe.ME.models.UserProfile;
+import RecruitMe.ME.repositories.ClientProfileRepository;
 import RecruitMe.ME.repositories.UserProfileRepository;
 import RecruitMe.ME.repositories.UserRepository;
+import ch.qos.logback.core.net.server.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,14 +21,16 @@ import java.util.UUID;
 public class UserService {
     @Autowired
     private final UserRepository userRepository;
+    private final UserProfileRepository userProfileRepository;
+    private final ClientProfileRepository clientProfileRepository;
 
     int strength = 10;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(strength, new SecureRandom());
-    private final UserProfileRepository userProfileRepository;
-    public UserService(UserRepository userRepository, UserProfileRepository userProfileRepository) {
+    public UserService(UserRepository userRepository, UserProfileRepository userProfileRepository, ClientProfileRepository clientProfileRepository) {
         this.userRepository = userRepository;
         this.userProfileRepository = userProfileRepository;
+        this.clientProfileRepository = clientProfileRepository;
     }
 
      public User registerUser(CreateUserRequestDTO requestDTO) {
@@ -42,6 +47,17 @@ public class UserService {
              userProfile.setUserId(userId);
 
              UserProfile savedProfile = userProfileRepository.save(userProfile);
+
+             if(requestDTO.getRole() == Role.RECRUITER) {
+                 ClientProfile clientProfile = new ClientProfile();
+                 clientProfile.setClientEmail(requestDTO.getEmail());
+                 clientProfile.setClientPassword(requestDTO.getEmail());
+                 clientProfile.setClientUsername(requestDTO.getUsername());
+                 clientProfile.setUserId(userId);
+
+                 clientProfileRepository.save(clientProfile);
+                 return savedUser;
+             }
 
              // Set UserProfile in User
              user.setProfile(savedProfile);
