@@ -14,6 +14,7 @@ public class ClientProfile {
     private String clientUsername;
     private String companyDescription;
     private int numberOfEmployees;
+    private List<Job> jobs;
     private List<String> companyStories;
     private String userId;
     public ClientProfile() {
@@ -82,6 +83,13 @@ public class ClientProfile {
 
    public void setUserId(String userId) {
         this.userId = userId;
+   }
+
+   public List<Job> getJobs() {
+        return jobs;
+   }
+   public void setJobs (List<Job> jobs){
+        this.jobs = jobs;
    }
 
 
