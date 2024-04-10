@@ -21,6 +21,7 @@ public class Job {
     private EmploymentType employmentType;
 
     private JobStatus jobStatus;
+    private String clientId;
 
 
     public Job(){
@@ -81,6 +82,9 @@ public class Job {
     public String getLocation() {
         return location;
     }
+    public void setLocation(String location){
+        this.location = location;
+    }
     public List<String> getTopThreeSkills() {
         return topThreeSkills;
     }
@@ -129,4 +133,11 @@ public class Job {
     public void setEmploymentType(EmploymentType employmentType){
         this.employmentType = employmentType;
     }
+    public String getClientId() {
+        return clientId;
+    }
+    public void setClientId(String clientId){
+        this.clientId = clientId;
+    }
+
 }

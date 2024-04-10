@@ -1,5 +1,7 @@
 package RecruitMe.ME.dto;
 
+import RecruitMe.ME.models.Job;
+
 import java.util.List;
 
 public class UpdateClientProfileDTO {
@@ -9,6 +11,7 @@ public class UpdateClientProfileDTO {
     private List<String> clientStories;
     private String companyDescription;
     private int numberOfEmployees;
+    private List<Job> jobs;
 
     public String getPassword() {
         return password;
@@ -50,6 +53,12 @@ public class UpdateClientProfileDTO {
 
     public void setNumberOfEmployees(int numberOfEmployees) {
         this.numberOfEmployees = numberOfEmployees;
+    }
+    public List<Job> getJobs(){
+        return jobs;
+    }
+    public void setJobs(List<Job> jobs) {
+        this.jobs = jobs;
     }
 
 }
