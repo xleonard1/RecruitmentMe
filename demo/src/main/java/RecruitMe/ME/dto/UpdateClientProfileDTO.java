@@ -2,6 +2,7 @@ package RecruitMe.ME.dto;
 
 import RecruitMe.ME.models.Job;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UpdateClientProfileDTO {
@@ -11,7 +12,7 @@ public class UpdateClientProfileDTO {
     private List<String> companyStories;
     private String companyDescription;
     private int numberOfEmployees;
-    private List<Job> jobs;
+    private ArrayList<Job> jobs;
 
     public String getClientPassword() {
         return clientPassword;
@@ -59,10 +60,10 @@ public class UpdateClientProfileDTO {
         this.companyStories = companyStories;
     }
 
-    public List<Job> getJobs() {
+    public ArrayList<Job> getJobs() {
         return jobs;
     }
-    public void setJobs (List<Job> jobs){
+    public void setJobs (ArrayList<Job> jobs){
         this.jobs = jobs;
     }
 

@@ -41,8 +41,7 @@ public class JobService {
             job.setJobStatus(createJobPostingDTO.getJobStatus());
 
             ClientProfile clientProfile = clientProfileRepository.findById(createJobPostingDTO.getClientId()).orElseThrow(() -> new NoSuchElementException("cannot find client profile" + createJobPostingDTO.getClientId()));
-            clientProfile.getJobs().add(job);
-            job.setClientId(clientProfile.getId());
+            clientProfile.addJob(job);
 
             clientProfileRepository.save(clientProfile);
 

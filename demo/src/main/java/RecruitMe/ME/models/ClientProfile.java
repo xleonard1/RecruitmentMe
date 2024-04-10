@@ -3,6 +3,7 @@ package RecruitMe.ME.models;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Document(collection = "ClientProfile")
@@ -14,20 +15,21 @@ public class ClientProfile {
     private String clientUsername;
     private String companyDescription;
     private int numberOfEmployees;
-    private List<Job> jobs;
+    private ArrayList<Job> jobs;
     private List<String> companyStories;
     private String userId;
     public ClientProfile() {
        // initial constructor
    }
 
-   public ClientProfile(String clientPassword, String clientEmail, String clientUsername, String companyDescription, int numberOfEmployees, List<String> companyStories) {
+   public ClientProfile(String clientPassword, String clientEmail, String clientUsername, String companyDescription, int numberOfEmployees, List<String> companyStories, ArrayList<Job> jobs) {
        this.companyDescription = companyDescription;
        this.companyStories = companyStories;
        this.numberOfEmployees = numberOfEmployees;
        this.clientPassword = clientPassword;
        this.clientEmail = clientEmail;
        this.clientUsername = clientUsername;
+       this.jobs = jobs;
    }
 
    public String getId() {
@@ -93,11 +95,17 @@ public class ClientProfile {
    }
 
    public List<Job> getJobs() {
-        return jobs;
-   }
-   public void setJobs (List<Job> jobs){
-        this.jobs = jobs;
+       return jobs;
    }
 
+   public void setJobs(ArrayList<Job> jobs) {
+        this.jobs = jobs;
+   }
+    public void addJob(Job job) {
+        if (this.jobs == null) {
+            this.jobs = new ArrayList<>(); // Initialize the list if it's null
+        }
+        this.jobs.add(job);
+    }
 
 }

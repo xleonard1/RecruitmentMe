@@ -32,5 +32,4 @@ public class JobController {
            return ResponseEntity.notFound().build();
        }
     }
-
 }
