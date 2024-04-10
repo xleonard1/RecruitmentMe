@@ -5,48 +5,44 @@ import RecruitMe.ME.models.Job;
 import java.util.List;
 
 public class UpdateClientProfileDTO {
-    private String password;
-    private String username;
-    private String email;
-    private List<String> clientStories;
+    private String clientPassword;
+    private String clientUsername;
+    private String clientEmail;
+    private List<String> companyStories;
     private String companyDescription;
     private int numberOfEmployees;
     private List<Job> jobs;
 
-    public String getPassword() {
-        return password;
-    }
-    public void setPassword(String password) {
-        this.password = password;
+    public String getClientPassword() {
+        return clientPassword;
     }
 
-    public String getUsername() {
-        return username;
+    public void setClientPassword(String clientPassword) {
+        this.clientPassword = clientPassword;
+    }
+    public String getClientEmail(){
+        return clientEmail;
+    }
+    public void setClientEmail(String clientEmail) {
+        this.clientEmail = clientEmail;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
+    public String getClientUsername(){
+        return clientUsername;
     }
 
-    public List<String> getClientStories(){
-        return clientStories;
-    }
-    public void setClientStories(List<String> clientStories) {
-        this.clientStories = clientStories;
+    public void setClientUsername(String clientUsername) {
+        this.clientUsername = clientUsername;
     }
 
     public String getCompanyDescription() {
         return companyDescription;
     }
+
     public void setCompanyDescription(String companyDescription) {
         this.companyDescription = companyDescription;
     }
+
     public int getNumberOfEmployees(){
         return numberOfEmployees;
     }
@@ -54,11 +50,21 @@ public class UpdateClientProfileDTO {
     public void setNumberOfEmployees(int numberOfEmployees) {
         this.numberOfEmployees = numberOfEmployees;
     }
-    public List<Job> getJobs(){
+
+    public List<String> getCompanyStories() {
+        return companyStories;
+    }
+
+    public void setCompanyStories(List<String> companyStories) {
+        this.companyStories = companyStories;
+    }
+
+    public List<Job> getJobs() {
         return jobs;
     }
-    public void setJobs(List<Job> jobs) {
+    public void setJobs (List<Job> jobs){
         this.jobs = jobs;
     }
+
 
 }

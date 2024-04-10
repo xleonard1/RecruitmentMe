@@ -7,39 +7,44 @@ import RecruitMe.ME.repositories.ClientProfileRepository;
 import RecruitMe.ME.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
 
-//@Service
+@Service
 public class ClientProfileService {
 
     @Autowired
     private final ClientProfileRepository clientProfileRepository;
     private final UserRepository userRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(12, new SecureRandom());
 
 
     public ClientProfileService(UserRepository userRepository, ClientProfileRepository clientProfileRepository) {
-        this.userRepository = userRepository;
         this.clientProfileRepository = clientProfileRepository;
+        this.userRepository = userRepository;
     }
+
+    private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(12, new SecureRandom());
 
     public ClientProfile updateClientProfile(String clientProfileId, UpdateClientProfileDTO requestDto) {
         try {
-            String hashedPassword = bCryptPasswordEncoder.encode(requestDto.getPassword());
+            String hashedPassword = bCryptPasswordEncoder.encode(requestDto.getClientPassword());
             ClientProfile clientProfile = clientProfileRepository.findById(clientProfileId).orElseThrow(() -> new RuntimeException("No Client Found with that Id"));
-            clientProfile.setClientPassword(requestDto.getPassword());
-            clientProfile.setClientEmail(requestDto.getEmail());
-            clientProfile.setClientUsername(requestDto.getUsername());
+            clientProfile.setClientPassword(requestDto.getClientPassword());
+            clientProfile.setClientEmail(requestDto.getClientEmail());
+            clientProfile.setClientUsername(requestDto.getClientUsername());
             clientProfile.setCompanyDescription(requestDto.getCompanyDescription());
-            clientProfile.setCompanyStories(requestDto.getClientStories());
+            clientProfile.setCompanyStories(requestDto.getCompanyStories());
             clientProfile.setNumberOfEmployees(requestDto.getNumberOfEmployees());
+            clientProfile.setJobs(requestDto.getJobs());
+
 
             if (clientProfile.getUserId() != null) {
-                User user = userRepository.findById((clientProfile.getUserId())).orElseThrow(() -> new RuntimeException("No User Found With That ID"));
-                user.setEmail(requestDto.getEmail());
+                User user = userRepository.findById((clientProfile.getUserId()))
+                        .orElseThrow(() -> new RuntimeException("No User Found With That ID"));
+                user.setEmail(requestDto.getClientEmail());
                 user.setPassword(hashedPassword);
-                user.setUsername(requestDto.getUsername());
+                user.setUsername(requestDto.getClientUsername());
                 userRepository.save(user);
             }
 

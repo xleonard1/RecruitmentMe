@@ -8,7 +8,7 @@ import java.util.List;
 @Document(collection = "ClientProfile")
 public class ClientProfile {
     @Id
-    private String Id;
+    private String id;
     private String clientPassword;
     private String clientEmail;
     private String clientUsername;
@@ -25,10 +25,17 @@ public class ClientProfile {
        this.companyDescription = companyDescription;
        this.companyStories = companyStories;
        this.numberOfEmployees = numberOfEmployees;
+       this.clientPassword = clientPassword;
+       this.clientEmail = clientEmail;
+       this.clientUsername = clientUsername;
    }
 
    public String getId() {
-        return Id;
+        return id;
+   }
+
+   public void setClientId(String clientId) {
+        this.id = clientId;
    }
 
    public String getClientPassword() {
