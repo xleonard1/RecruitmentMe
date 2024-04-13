@@ -3,6 +3,7 @@ package RecruitMe.ME.services;
 import RecruitMe.ME.dto.CreateUserRequestDTO;
 import RecruitMe.ME.dto.UpdateProfileRequestDTO;
 import RecruitMe.ME.models.*;
+import RecruitMe.ME.repositories.JobRepository;
 import RecruitMe.ME.repositories.UserProfileRepository;
 import RecruitMe.ME.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,10 +23,12 @@ public class UserProfileService {
     @Autowired
     private final  UserProfileRepository userProfileRepository;
     private final UserRepository userRepository;
+    private final JobRepository jobRepository;
 
-    public UserProfileService(UserProfileRepository userProfileRepository, UserRepository userRepository) {
+    public UserProfileService(UserProfileRepository userProfileRepository, UserRepository userRepository, JobRepository jobRepository) {
         this.userProfileRepository = userProfileRepository;
         this.userRepository = userRepository;
+        this.jobRepository = jobRepository;
     }
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(12, new SecureRandom());
 
@@ -75,5 +79,19 @@ public UserProfile updateProfile(String userId, UpdateProfileRequestDTO requestD
             throw new RuntimeException(error.toString());
         }
 
+    }
+
+    public UserProfile applyForJob(String userId, String jobId) {
+        UserProfile userProfile = userProfileRepository.findById(userId).orElseThrow(() -> new RuntimeException("cannot find user with that Id"));
+        Job job = jobRepository.findById(jobId).orElseThrow(() -> new RuntimeException("cannot find job with that Id"));
+
+        List<AppliedJob> appliedJobs = userProfile.getAppliedJobs();
+        if(appliedJobs == null) {
+            appliedJobs = new ArrayList<>();
+        }
+        appliedJobs.add(new AppliedJob(job.getJobId(), job.getJobTitle()));
+        userProfile.setAppliedJobs(appliedJobs);
+
+        return userProfileRepository.save(userProfile);
     }
 }

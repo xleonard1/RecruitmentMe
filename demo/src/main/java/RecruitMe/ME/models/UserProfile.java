@@ -2,6 +2,7 @@ package RecruitMe.ME.models;
 
 import org.springframework.data.annotation.Id;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -32,6 +33,7 @@ public class UserProfile {
     private double expectedSalaryMin;
     private double expectedSalaryMax;
     private Availability availability;
+    List<AppliedJob> appliedJobs;
     private String userId;
 
     public UserProfile() {
@@ -79,6 +81,7 @@ public class UserProfile {
        this.preferredWorkLocations = preferredWorkLocations;
        this.expectedSalaryMax = expectedSalaryMax;
        this.expectedSalaryMin = expectedSalaryMin;
+       this.appliedJobs = new ArrayList<>();
 
 
     }
@@ -256,9 +259,20 @@ public class UserProfile {
     public String getUserId() {
         return userId;
     }
-
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+    public void applyForJob(AppliedJob appliedJob){
+        appliedJobs.add(appliedJob);
+    }
+    public List<AppliedJob> getAppliedJobs() {
+        if(appliedJobs != null) {
+            return appliedJobs;
+        }
+    }
+
+    public void setAppliedJobs(List<AppliedJob> appliedJobs) {
+        this.appliedJobs = appliedJobs
     }
 
 }
