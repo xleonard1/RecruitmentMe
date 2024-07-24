@@ -1,13 +1,17 @@
 package RecruitMe.ME.services;
 
 import RecruitMe.ME.dto.CreateJobPostingDTO;
+import RecruitMe.ME.models.AppliedJob;
 import RecruitMe.ME.models.ClientProfile;
 import RecruitMe.ME.models.Job;
+import RecruitMe.ME.models.UserProfile;
 import RecruitMe.ME.repositories.ClientProfileRepository;
 import RecruitMe.ME.repositories.JobRepository;
+import RecruitMe.ME.repositories.UserProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -19,9 +23,12 @@ public class JobService {
     private final JobRepository jobRepository;
     private final ClientProfileRepository clientProfileRepository;
 
-    public JobService(JobRepository jobRepository, ClientProfileRepository clientProfileRepository) {
+    private final UserProfileRepository userProfileRepository;
+
+    public JobService(JobRepository jobRepository, ClientProfileRepository clientProfileRepository, UserProfileRepository userProfileRepository) {
         this.jobRepository = jobRepository;
         this.clientProfileRepository = clientProfileRepository;
+        this.userProfileRepository = userProfileRepository;
     }
 
     public Job createJobPosting(CreateJobPostingDTO createJobPostingDTO) {
@@ -59,6 +66,20 @@ public class JobService {
         } catch(Exception error){
             throw new RuntimeException(error);
         }
+    }
+
+    public UserProfile applyForJob(String userId, String jobId) {
+        UserProfile userProfile = userProfileRepository.findById(userId).orElseThrow(() -> new RuntimeException("cannot find user with that Id"));
+        Job job = jobRepository.findById(jobId).orElseThrow(() -> new RuntimeException("cannot find job with that Id"));
+
+        List<AppliedJob> appliedJobs = userProfile.getAppliedJobs();
+        if(appliedJobs == null) {
+            appliedJobs = new ArrayList<>();
+        }
+        appliedJobs.add(new AppliedJob(job.getJobId(), job.getJobTitle()));
+        userProfile.setAppliedJobs(appliedJobs);
+
+        return userProfileRepository.save(userProfile);
     }
 
 }

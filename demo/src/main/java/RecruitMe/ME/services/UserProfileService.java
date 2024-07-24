@@ -81,17 +81,5 @@ public UserProfile updateProfile(String userId, UpdateProfileRequestDTO requestD
 
     }
 
-    public UserProfile applyForJob(String userId, String jobId) {
-        UserProfile userProfile = userProfileRepository.findById(userId).orElseThrow(() -> new RuntimeException("cannot find user with that Id"));
-        Job job = jobRepository.findById(jobId).orElseThrow(() -> new RuntimeException("cannot find job with that Id"));
 
-        List<AppliedJob> appliedJobs = userProfile.getAppliedJobs();
-        if(appliedJobs == null) {
-            appliedJobs = new ArrayList<>();
-        }
-        appliedJobs.add(new AppliedJob(job.getJobId(), job.getJobTitle()));
-        userProfile.setAppliedJobs(appliedJobs);
-
-        return userProfileRepository.save(userProfile);
-    }
 }

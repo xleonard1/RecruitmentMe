@@ -35,4 +35,10 @@ public class ProfileController {
         }
     }
 
+    @PostMapping("/{userId}/apply/{jobId}")
+    public ResponseEntity<String> applyForJob(@PathVariable String userId, @PathVariable String jobId) {
+        userProfileService.applyForJob(userId, jobId);
+        return ResponseEntity.ok("Job application successful");
+    }
+
 }
