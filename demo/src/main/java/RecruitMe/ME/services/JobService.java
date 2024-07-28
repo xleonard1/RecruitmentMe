@@ -78,16 +78,25 @@ public class JobService {
         Job job = jobRepository.findById(jobId).orElseThrow(() -> new RuntimeException("cannot find job with that Id"));
 
         List<AppliedJob> appliedJobs = userProfile.getAppliedJobs();
+
         if(appliedJobs == null) {
             appliedJobs = new ArrayList<>();
         }
+
         appliedJobs.add(new AppliedJob(job.getJobId(), job.getJobTitle()));
+        userProfile.setAppliedJobs(appliedJobs);
 
-        //[TODO]: the job should have a list of applicants not the client.
+        List<UserProfile> applicants = job.getApplicants();
+        if(applicants == null){
+            applicants = new ArrayList<>();
+        }
 
+        applicants.add(userProfile);
+        job.setApplicants(applicants);
 
 
         userProfileRepository.save(userProfile);
+        jobRepository.save(job);
     }
 
 }
