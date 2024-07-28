@@ -2,10 +2,7 @@ package RecruitMe.ME.services;
 
 import RecruitMe.ME.controllers.UserController;
 import RecruitMe.ME.dto.CreateJobPostingDTO;
-import RecruitMe.ME.models.AppliedJob;
-import RecruitMe.ME.models.ClientProfile;
-import RecruitMe.ME.models.Job;
-import RecruitMe.ME.models.UserProfile;
+import RecruitMe.ME.models.*;
 import RecruitMe.ME.repositories.ClientProfileRepository;
 import RecruitMe.ME.repositories.JobRepository;
 import RecruitMe.ME.repositories.UserProfileRepository;
@@ -86,17 +83,34 @@ public class JobService {
         appliedJobs.add(new AppliedJob(job.getJobId(), job.getJobTitle()));
         userProfile.setAppliedJobs(appliedJobs);
 
-        List<UserProfile> applicants = job.getApplicants();
+        List<JobApplicant> applicants = job.getApplicants();
         if(applicants == null){
             applicants = new ArrayList<>();
         }
 
-        applicants.add(userProfile);
+        JobApplicant applicant = createJobApplicant(userProfile);
+
+        applicants.add(applicant);
         job.setApplicants(applicants);
 
 
         userProfileRepository.save(userProfile);
         jobRepository.save(job);
+    }
+    private JobApplicant createJobApplicant(UserProfile userProfile) {
+        JobApplicant applicant = new JobApplicant();
+        applicant.setFirstName(userProfile.getFirstName());
+        applicant.setLastName(userProfile.getLastName());
+        applicant.setDateOfBirth(userProfile.getDateOfBirth());
+        applicant.setEmailAddress(userProfile.getEmailAddress());
+        applicant.setGender(userProfile.getGender());
+        applicant.setPhoneNumber(userProfile.getPhoneNumber());
+        applicant.setSoftSkills(userProfile.getSoftSkills());
+        applicant.setSpokenLanguages(userProfile.getSpokenLanguages());
+        applicant.setTechnicalSkills(userProfile.getTechnicalSkills());
+        applicant.setApplicantId(userProfile.getId());
+        applicant.setEducationBackground(userProfile.getEducationBackground());
+        return applicant;
     }
 
 }

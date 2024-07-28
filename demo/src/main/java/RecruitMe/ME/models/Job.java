@@ -22,7 +22,7 @@ public class Job {
 
     private JobStatus jobStatus;
     private String clientId;
-    private List<UserProfile> applicants;
+    private List<JobApplicant> applicants;
 
 
     public Job(){
@@ -42,7 +42,7 @@ public class Job {
             EmploymentType employmentType,
             JobStatus jobStatus,
             List<String> niceToHaves,
-            List<UserProfile> applicants
+            List<JobApplicant> applicants
     ) {
             this.jobTitle = jobTitle;
             this.jobDescription = jobDescription;
@@ -142,10 +142,10 @@ public class Job {
     public void setClientId(String clientId){
         this.clientId = clientId;
     }
-    public List<UserProfile> getApplicants() {
+    public List<JobApplicant> getApplicants() {
         return this.applicants;
     }
-    public void setApplicants(List<UserProfile> applicants ){
+    public void setApplicants(List<JobApplicant> applicants ){
         this.applicants = applicants;
     }
 
