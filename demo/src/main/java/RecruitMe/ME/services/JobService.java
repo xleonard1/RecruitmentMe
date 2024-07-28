@@ -83,7 +83,7 @@ public class JobService {
         }
         appliedJobs.add(new AppliedJob(job.getJobId(), job.getJobTitle()));
 
-        //[TODO]: find the client profile that the job belongs to, once you find the profile when that job is applied to add the user profile who applied to that job.
+        //[TODO]: the job should have a list of applicants not the client.
 
 
 
