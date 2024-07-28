@@ -82,7 +82,10 @@ public class JobService {
             appliedJobs = new ArrayList<>();
         }
         appliedJobs.add(new AppliedJob(job.getJobId(), job.getJobTitle()));
-        userProfile.setAppliedJobs(appliedJobs);
+
+        //[TODO]: find the client profile that the job belongs to, once you find the profile when that job is applied to add the user profile who applied to that job.
+
+
 
         userProfileRepository.save(userProfile);
     }

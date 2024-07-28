@@ -3,6 +3,7 @@ package RecruitMe.ME.models;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,11 +19,21 @@ public class ClientProfile {
     private ArrayList<Job> jobs;
     private List<String> companyStories;
     private String userId;
+    private List<UserProfile> applicants;
     public ClientProfile() {
        // initial constructor
    }
 
-   public ClientProfile(String clientPassword, String clientEmail, String clientUsername, String companyDescription, int numberOfEmployees, List<String> companyStories, ArrayList<Job> jobs) {
+   public ClientProfile(
+           String clientPassword,
+           String clientEmail,
+           String clientUsername,
+           String companyDescription,
+           int numberOfEmployees,
+           List<String> companyStories,
+           ArrayList<Job> jobs,
+           List<UserProfile> applicants
+   ) {
        this.companyDescription = companyDescription;
        this.companyStories = companyStories;
        this.numberOfEmployees = numberOfEmployees;
@@ -30,6 +41,7 @@ public class ClientProfile {
        this.clientEmail = clientEmail;
        this.clientUsername = clientUsername;
        this.jobs = jobs;
+       this.applicants = applicants;
    }
 
    public String getId() {
@@ -106,6 +118,13 @@ public class ClientProfile {
             this.jobs = new ArrayList<>(); // Initialize the list if it's null
         }
         this.jobs.add(job);
+    }
+
+    public List<UserProfile> getApplicants(){
+        return applicants;
+    }
+    public void setApplicants(List<UserProfile> applicants) {
+        this.applicants = applicants;
     }
 
 }
