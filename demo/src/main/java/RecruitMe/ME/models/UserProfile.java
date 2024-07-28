@@ -1,10 +1,9 @@
 package RecruitMe.ME.models;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.http.ResponseEntity;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 public class UserProfile {
@@ -269,10 +268,13 @@ public class UserProfile {
         if(appliedJobs != null) {
             return appliedJobs;
         }
+        return new ArrayList<>();
     }
 
-    public void setAppliedJobs(List<AppliedJob> appliedJobs) {
-        this.appliedJobs = appliedJobs
+    public void setAppliedJobs(
+            List<AppliedJob> appliedJobs
+    ) {
+        this.appliedJobs = appliedJobs;
     }
 
 }

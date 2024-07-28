@@ -1,5 +1,6 @@
 package RecruitMe.ME.services;
 
+import RecruitMe.ME.controllers.UserController;
 import RecruitMe.ME.dto.CreateJobPostingDTO;
 import RecruitMe.ME.models.AppliedJob;
 import RecruitMe.ME.models.ClientProfile;
@@ -8,6 +9,8 @@ import RecruitMe.ME.models.UserProfile;
 import RecruitMe.ME.repositories.ClientProfileRepository;
 import RecruitMe.ME.repositories.JobRepository;
 import RecruitMe.ME.repositories.UserProfileRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +27,8 @@ public class JobService {
     private final ClientProfileRepository clientProfileRepository;
 
     private final UserProfileRepository userProfileRepository;
+
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     public JobService(JobRepository jobRepository, ClientProfileRepository clientProfileRepository, UserProfileRepository userProfileRepository) {
         this.jobRepository = jobRepository;
@@ -68,7 +73,7 @@ public class JobService {
         }
     }
 
-    public UserProfile applyForJob(String userId, String jobId) {
+    public void applyForJob(String userId, String jobId) {
         UserProfile userProfile = userProfileRepository.findById(userId).orElseThrow(() -> new RuntimeException("cannot find user with that Id"));
         Job job = jobRepository.findById(jobId).orElseThrow(() -> new RuntimeException("cannot find job with that Id"));
 
@@ -79,7 +84,7 @@ public class JobService {
         appliedJobs.add(new AppliedJob(job.getJobId(), job.getJobTitle()));
         userProfile.setAppliedJobs(appliedJobs);
 
-        return userProfileRepository.save(userProfile);
+        userProfileRepository.save(userProfile);
     }
 
 }

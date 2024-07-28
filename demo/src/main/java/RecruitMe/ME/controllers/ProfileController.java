@@ -3,6 +3,7 @@ package RecruitMe.ME.controllers;
 
 import RecruitMe.ME.dto.UpdateProfileRequestDTO;
 import RecruitMe.ME.models.UserProfile;
+import RecruitMe.ME.services.JobService;
 import RecruitMe.ME.services.UserProfileService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.*;
 public class ProfileController {
     private final UserProfileService userProfileService;
 
-    public ProfileController(UserProfileService userProfileService) {
+    public ProfileController(
+            UserProfileService userProfileService
+       ) {
         this.userProfileService = userProfileService;
     }
 
@@ -35,10 +38,6 @@ public class ProfileController {
         }
     }
 
-    @PostMapping("/{userId}/apply/{jobId}")
-    public ResponseEntity<String> applyForJob(@PathVariable String userId, @PathVariable String jobId) {
-        userProfileService.applyForJob(userId, jobId);
-        return ResponseEntity.ok("Job application successful");
-    }
+
 
 }
